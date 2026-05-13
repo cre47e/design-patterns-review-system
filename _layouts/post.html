@@ -1,0 +1,43 @@
+---
+layout: default
+---
+
+<article>
+  <header class="article-header">
+    <div class="container--narrow">
+      <div class="article-eyebrow">
+        <span class="tag tag-post">Blog</span>
+        {% if page.category %}<span class="tag tag-structural">{{ page.category }}</span>{% endif %}
+        {% if page.review_status == "approved" %}
+          <span class="review-badge approved">✓ AI Reviewed</span>
+        {% elsif page.review_status == "pending" %}
+          <span class="review-badge pending">⏳ Pending Review</span>
+        {% endif %}
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="article-description">{{ page.description }}</p>{% endif %}
+      <div class="article-byline">
+        {% if page.author %}<span>✍️ {{ page.author }}</span>{% endif %}
+        <span>📅 {{ page.date | date: "%B %-d, %Y" }}</span>
+        {% if page.reading_time %}<span>🕐 {{ page.reading_time }} min read</span>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="article-body">
+    <div class="container--narrow prose">
+      {{ content }}
+    </div>
+  </div>
+
+  {% if page.tags.size > 0 %}
+  <div style="padding: 0 1.5rem 2rem; max-width: 760px; margin: 0 auto;">
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em;">Tags:</span>
+      {% for tag in page.tags %}
+      <span class="tag tag-structural">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</article>

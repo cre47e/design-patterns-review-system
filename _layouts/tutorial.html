@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+<article>
+  <header class="article-header">
+    <div class="container--narrow">
+      <div class="article-eyebrow">
+        <span class="tag tag-tutorial">Tutorial</span>
+        {% if page.level %}<span class="tag tag-creational">{{ page.level }}</span>{% endif %}
+        {% if page.review_status == "approved" %}
+          <span class="review-badge approved">✓ AI Reviewed</span>
+        {% elsif page.review_status == "pending" %}
+          <span class="review-badge pending">⏳ Pending Review</span>
+        {% endif %}
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="article-description">{{ page.description }}</p>{% endif %}
+      <div class="article-byline">
+        {% if page.author %}<span>✍️ {{ page.author }}</span>{% endif %}
+        <span>📅 {{ page.date | date: "%B %-d, %Y" }}</span>
+        {% if page.reading_time %}<span>🕐 {{ page.reading_time }} min read</span>{% endif %}
+        {% if page.level %}<span>⚡ {{ page.level }}</span>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if page.prerequisites %}
+  <div style="background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.2rem 1.5rem;">
+    <div class="container--narrow">
+      <div class="callout callout-info">
+        <span class="callout-icon">📋</span>
+        <div>
+          <strong>Prerequisites:</strong>
+          {% for prereq in page.prerequisites %}{{ prereq }}{% unless forloop.last %}, {% endunless %}{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="article-body">
+    <div class="container--narrow prose">
+      {{ content }}
+    </div>
+  </div>
+</article>

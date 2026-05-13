@@ -1,0 +1,20 @@
+<header class="site-header">
+  <nav class="nav-inner">
+    <a href="{{ '/' | relative_url }}" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="22" height="22" rx="6" fill="#6C63FF"/>
+        <path d="M6 7h10M6 11h7M6 15h9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Pattern<span>&</span>Post
+    </a>
+    <ul class="nav-links">
+      <li><a href="{{ '/patterns/' | relative_url }}" {% if page.url contains '/patterns' %}class="active"{% endif %}>Patterns</a></li>
+      <li><a href="{{ '/blog/' | relative_url }}" {% if page.url contains '/blog' %}class="active"{% endif %}>Blog</a></li>
+      <li><a href="{{ '/tutorials/' | relative_url }}" {% if page.url contains '/tutorials' %}class="active"{% endif %}>Tutorials</a></li>
+    </ul>
+    <a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/CONTRIBUTING.md"
+       class="btn btn-primary nav-cta" target="_blank" rel="noopener">
+      Submit Content
+    </a>
+  </nav>
+</header>

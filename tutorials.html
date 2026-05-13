@@ -1,0 +1,73 @@
+---
+layout: default
+title: Tutorials
+description: Step-by-step guides reviewed for completeness and technical accuracy by Claude AI.
+permalink: /tutorials/
+---
+
+<div class="page-header">
+  <div class="container">
+    <h1>Tutorials</h1>
+    <p>Step-by-step guides reviewed for completeness, accuracy, and beginner-friendliness.</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Levels</button>
+  <button class="filter-btn" data-filter="beginner">Beginner</button>
+  <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+  <button class="filter-btn" data-filter="advanced">Advanced</button>
+</div>
+
+<div class="listing-section">
+  <div class="container">
+    {% assign sorted_tutorials = site.tutorials | sort: "date" | reverse %}
+    {% if sorted_tutorials.size > 0 %}
+    <div class="cards-grid" id="tutorials-grid">
+      {% for tutorial in sorted_tutorials %}
+      <div class="card" data-level="{{ tutorial.level | downcase }}">
+        <div class="card-meta">
+          <span class="tag tag-tutorial">Tutorial</span>
+          {% if tutorial.level %}<span class="tag tag-creational">{{ tutorial.level }}</span>{% endif %}
+          <span class="card-date">{{ tutorial.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ tutorial.url | relative_url }}">{{ tutorial.title }}</a></h3>
+        <p>{{ tutorial.description | default: tutorial.excerpt | strip_html | truncate: 130 }}</p>
+        <div class="card-footer">
+          <span class="card-author">by {{ tutorial.author | default: "Community" }}</span>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            {% if tutorial.review_status == "approved" %}
+              <span class="review-badge approved">✓ Reviewed</span>
+            {% elsif tutorial.review_status == "pending" %}
+              <span class="review-badge pending">⏳ Pending</span>
+            {% endif %}
+            <a href="{{ tutorial.url | relative_url }}" class="card-link">Read →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center; padding:4rem 0; color:var(--muted);">
+      <p style="font-size:3rem; margin-bottom:1rem;">📚</p>
+      <h3>No tutorials yet</h3>
+      <p>Be the first to write a tutorial!</p>
+      <a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/CONTRIBUTING.md"
+         class="btn btn-primary" style="margin-top:1.5rem;" target="_blank" rel="noopener">Submit a Tutorial</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('#tutorials-grid .card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.level === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>

@@ -1,0 +1,64 @@
+title: "Pattern & Post Review"
+description: "A community-reviewed collection of design patterns, blog articles, and tutorials."
+baseurl: ""
+url: "https://cre47e.github.io"
+github_username: "cre47e"
+github_repo: "design-patterns-review-system"
+author:
+  name: "Community Contributors"
+
+# Collections
+collections:
+  patterns:
+    output: true
+    permalink: /patterns/:name/
+  tutorials:
+    output: true
+    permalink: /tutorials/:name/
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: null
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+
+# Pagination (blog)
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Defaults
+defaults:
+  - scope:
+      path: "_patterns"
+      type: patterns
+    values:
+      layout: pattern
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: "_tutorials"
+      type: tutorials
+    values:
+      layout: tutorial
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .github
+  - node_modules
+  - vendor

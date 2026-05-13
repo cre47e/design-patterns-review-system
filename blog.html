@@ -1,0 +1,52 @@
+---
+layout: default
+title: Blog
+description: Engineering insights, deep dives, and opinions from the community — reviewed by Claude AI.
+permalink: /blog/
+---
+
+<div class="page-header">
+  <div class="container">
+    <h1>Blog Articles</h1>
+    <p>Engineering insights and deep dives from the community, reviewed for clarity and accuracy.</p>
+  </div>
+</div>
+
+<div class="listing-section">
+  <div class="container">
+    {% if site.posts.size > 0 %}
+    <div class="cards-grid">
+      {% for post in site.posts %}
+      <div class="card">
+        <div class="card-meta">
+          <span class="tag tag-post">Blog</span>
+          {% if post.category %}<span class="tag tag-structural">{{ post.category }}</span>{% endif %}
+          <span class="card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 130 }}</p>
+        <div class="card-footer">
+          <span class="card-author">by {{ post.author | default: "Community" }}</span>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            {% if post.review_status == "approved" %}
+              <span class="review-badge approved">✓ Reviewed</span>
+            {% elsif post.review_status == "pending" %}
+              <span class="review-badge pending">⏳ Pending</span>
+            {% endif %}
+            <a href="{{ post.url | relative_url }}" class="card-link">Read →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center; padding:4rem 0; color:var(--muted);">
+      <p style="font-size:3rem; margin-bottom:1rem;">✍️</p>
+      <h3>No articles yet</h3>
+      <p>Be the first to publish a blog article!</p>
+      <a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/CONTRIBUTING.md"
+         class="btn btn-primary" style="margin-top:1.5rem;" target="_blank" rel="noopener">Submit an Article</a>
+    </div>
+    {% endif %}
+  </div>
+</div>

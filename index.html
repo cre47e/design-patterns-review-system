@@ -1,0 +1,177 @@
+---
+layout: default
+title: Home
+---
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Community-Reviewed Technical Content</div>
+    <h1>Design Patterns, Blog Posts &amp;<br><em>Tutorials</em> — Reviewed by AI</h1>
+    <p>Every submission is automatically reviewed by Claude AI for quality, correctness, and clarity before a human approves it.</p>
+    <div class="hero-actions">
+      <a href="{{ '/patterns/' | relative_url }}" class="btn btn-primary">Browse Patterns</a>
+      <a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/CONTRIBUTING.md"
+         class="btn btn-outline" target="_blank" rel="noopener">Submit Content →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">{{ site.patterns.size | default: 0 }}</div>
+    <div class="stat-label">Design Patterns</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">{{ site.posts.size | default: 0 }}</div>
+    <div class="stat-label">Blog Articles</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">{{ site.tutorials.size | default: 0 }}</div>
+    <div class="stat-label">Tutorials</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">AI Reviewed</div>
+  </div>
+</div>
+
+<!-- Latest Patterns -->
+{% assign recent_patterns = site.patterns | sort: "date" | reverse | limit: 3 %}
+{% if recent_patterns.size > 0 %}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest Design Patterns</h2>
+      <p>Battle-tested patterns with code examples, reviewed for accuracy.</p>
+    </div>
+    <div class="cards-grid">
+      {% for pattern in recent_patterns %}
+      <div class="card">
+        <div class="card-meta">
+          <span class="tag tag-pattern">Pattern</span>
+          {% if pattern.pattern_type %}<span class="tag tag-{{ pattern.pattern_type | downcase }}">{{ pattern.pattern_type }}</span>{% endif %}
+          <span class="card-date">{{ pattern.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ pattern.url | relative_url }}">{{ pattern.title }}</a></h3>
+        <p>{{ pattern.description | default: pattern.excerpt | strip_html | truncate: 120 }}</p>
+        <div class="card-footer">
+          <span class="card-author">{{ pattern.author | default: "Community" }}</span>
+          {% if pattern.review_status == "approved" %}
+            <span class="review-badge approved">✓ Reviewed</span>
+          {% else %}
+            <a href="{{ pattern.url | relative_url }}" class="card-link">Read →</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="{{ '/patterns/' | relative_url }}" class="btn btn-outline">View All Patterns</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Latest Blog Posts -->
+{% assign recent_posts = site.posts | limit: 3 %}
+{% if recent_posts.size > 0 %}
+<section class="section" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest Blog Articles</h2>
+      <p>Engineering insights and deep dives from the community.</p>
+    </div>
+    <div class="cards-grid">
+      {% for post in recent_posts %}
+      <div class="card">
+        <div class="card-meta">
+          <span class="tag tag-post">Blog</span>
+          {% if post.category %}<span class="tag tag-structural">{{ post.category }}</span>{% endif %}
+          <span class="card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 120 }}</p>
+        <div class="card-footer">
+          <span class="card-author">{{ post.author | default: "Community" }}</span>
+          {% if post.review_status == "approved" %}
+            <span class="review-badge approved">✓ Reviewed</span>
+          {% else %}
+            <a href="{{ post.url | relative_url }}" class="card-link">Read →</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline">View All Posts</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Latest Tutorials -->
+{% assign recent_tutorials = site.tutorials | sort: "date" | reverse | limit: 3 %}
+{% if recent_tutorials.size > 0 %}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest Tutorials</h2>
+      <p>Step-by-step guides to help you build and learn faster.</p>
+    </div>
+    <div class="cards-grid">
+      {% for tutorial in recent_tutorials %}
+      <div class="card">
+        <div class="card-meta">
+          <span class="tag tag-tutorial">Tutorial</span>
+          {% if tutorial.level %}<span class="tag tag-creational">{{ tutorial.level }}</span>{% endif %}
+          <span class="card-date">{{ tutorial.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ tutorial.url | relative_url }}">{{ tutorial.title }}</a></h3>
+        <p>{{ tutorial.description | default: tutorial.excerpt | strip_html | truncate: 120 }}</p>
+        <div class="card-footer">
+          <span class="card-author">{{ tutorial.author | default: "Community" }}</span>
+          <a href="{{ tutorial.url | relative_url }}" class="card-link">Read →</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="{{ '/tutorials/' | relative_url }}" class="btn btn-outline">View All Tutorials</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- How It Works -->
+<section class="section" style="background: var(--surface); border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <h2>How the Review Process Works</h2>
+      <p>Every piece of content goes through an AI-assisted quality check before publishing.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Fork &amp; Write</h3>
+        <p>Fork the repo, create a Markdown file in <code>_patterns/</code>, <code>_posts/</code>, or <code>_tutorials/</code>.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Open a PR</h3>
+        <p>Submit a pull request. The GitHub Action triggers automatically within seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Claude Reviews</h3>
+        <p>Claude AI checks technical accuracy, code quality, clarity, and structure, then posts detailed feedback on the PR.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Human Approval</h3>
+        <p>A maintainer reviews Claude's feedback and your content, then merges to publish on GitHub Pages.</p>
+      </div>
+    </div>
+  </div>
+</section>

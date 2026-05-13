@@ -1,0 +1,41 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="22" height="22" rx="6" fill="#6C63FF"/>
+          <path d="M6 7h10M6 11h7M6 15h9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Pattern<span style="color:var(--accent)">&</span>Post
+      </a>
+      <p>Community-reviewed design patterns, blog articles, and tutorials. Every submission is AI-reviewed before human approval.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Content</h4>
+      <ul>
+        <li><a href="{{ '/patterns/' | relative_url }}">Design Patterns</a></li>
+        <li><a href="{{ '/blog/' | relative_url }}">Blog Articles</a></li>
+        <li><a href="{{ '/tutorials/' | relative_url }}">Tutorials</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contribute</h4>
+      <ul>
+        <li><a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}" target="_blank" rel="noopener">GitHub Repo</a></li>
+        <li><a href="{{ site.baseurl }}/CONTRIBUTING" target="_blank">How to Submit</a></li>
+        <li><a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/issues" target="_blank" rel="noopener">Open an Issue</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Meta</h4>
+      <ul>
+        <li><a href="{{ site.baseurl }}/feed.xml">RSS Feed</a></li>
+        <li><a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/LICENSE" target="_blank" rel="noopener">License</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© {{ 'now' | date: "%Y" }} Pattern &amp; Post. Content licensed under CC BY 4.0.</span>
+    <span>Review powered by <a href="https://www.anthropic.com/claude">Claude AI</a></span>
+  </div>
+</footer>

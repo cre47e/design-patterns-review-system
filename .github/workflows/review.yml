@@ -1,0 +1,48 @@
+name: AI Content Review
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "_patterns/**"
+      - "_posts/**"
+      - "_tutorials/**"
+
+permissions:
+  pull-requests: write
+  contents: read
+  issues: write
+
+jobs:
+  review:
+    name: Claude AI Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so git diff works
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install anthropic==0.40.0
+
+      - name: Run AI review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/review_content.py
+
+      - name: Ensure review labels exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "ai-approved"      --color "0e8a16" --description "Passed AI review" --force
+          gh label create "needs-revision"   --color "e4e669" --description "AI review requests changes" --force
+          gh label create "ai-rejected"      --color "d73a4a" --description "Rejected by AI review" --force
+        continue-on-error: true

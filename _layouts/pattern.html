@@ -1,0 +1,67 @@
+---
+layout: default
+---
+
+<article>
+  <header class="article-header">
+    <div class="container--narrow">
+      <div class="article-eyebrow">
+        <span class="tag tag-pattern">Design Pattern</span>
+        {% if page.pattern_type %}
+          <span class="tag tag-{{ page.pattern_type | downcase }}">{{ page.pattern_type }}</span>
+        {% endif %}
+        {% if page.review_status == "approved" %}
+          <span class="review-badge approved">✓ AI Reviewed</span>
+        {% elsif page.review_status == "pending" %}
+          <span class="review-badge pending">⏳ Pending Review</span>
+        {% endif %}
+      </div>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="article-description">{{ page.description }}</p>{% endif %}
+      <div class="article-byline">
+        {% if page.author %}<span>✍️ {{ page.author }}</span>{% endif %}
+        <span>📅 {{ page.date | date: "%B %-d, %Y" }}</span>
+        {% if page.difficulty %}<span>⚡ {{ page.difficulty }}</span>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if page.pattern_type or page.difficulty or page.languages or page.use_when %}
+  <div style="background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.5rem;">
+    <div class="container--narrow">
+      <dl class="pattern-meta-grid">
+        {% if page.pattern_type %}
+        <div class="pattern-meta-item">
+          <dt>Category</dt>
+          <dd>{{ page.pattern_type }}</dd>
+        </div>
+        {% endif %}
+        {% if page.difficulty %}
+        <div class="pattern-meta-item">
+          <dt>Difficulty</dt>
+          <dd>{{ page.difficulty }}</dd>
+        </div>
+        {% endif %}
+        {% if page.languages %}
+        <div class="pattern-meta-item">
+          <dt>Languages</dt>
+          <dd>{{ page.languages | join: ", " }}</dd>
+        </div>
+        {% endif %}
+        {% if page.also_known_as %}
+        <div class="pattern-meta-item">
+          <dt>Also Known As</dt>
+          <dd>{{ page.also_known_as }}</dd>
+        </div>
+        {% endif %}
+      </dl>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="article-body">
+    <div class="container--narrow prose">
+      {{ content }}
+    </div>
+  </div>
+</article>

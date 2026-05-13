@@ -1,0 +1,75 @@
+---
+layout: default
+title: Design Patterns
+description: Community-reviewed design patterns with code examples across Creational, Structural, and Behavioral categories.
+permalink: /patterns/
+---
+
+<div class="page-header">
+  <div class="container">
+    <h1>Design Patterns</h1>
+    <p>Battle-tested patterns with code examples, reviewed for technical accuracy by Claude AI.</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="creational">Creational</button>
+  <button class="filter-btn" data-filter="structural">Structural</button>
+  <button class="filter-btn" data-filter="behavioral">Behavioral</button>
+</div>
+
+<div class="listing-section">
+  <div class="container">
+    {% assign sorted_patterns = site.patterns | sort: "date" | reverse %}
+    {% if sorted_patterns.size > 0 %}
+    <div class="cards-grid" id="patterns-grid">
+      {% for pattern in sorted_patterns %}
+      <div class="card" data-type="{{ pattern.pattern_type | downcase }}">
+        <div class="card-meta">
+          <span class="tag tag-pattern">Pattern</span>
+          {% if pattern.pattern_type %}
+            <span class="tag tag-{{ pattern.pattern_type | downcase }}">{{ pattern.pattern_type }}</span>
+          {% endif %}
+          <span class="card-date">{{ pattern.date | date: "%b %-d, %Y" }}</span>
+        </div>
+        <h3><a href="{{ pattern.url | relative_url }}">{{ pattern.title }}</a></h3>
+        <p>{{ pattern.description | default: pattern.excerpt | strip_html | truncate: 130 }}</p>
+        <div class="card-footer">
+          <span class="card-author">by {{ pattern.author | default: "Community" }}</span>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            {% if pattern.review_status == "approved" %}
+              <span class="review-badge approved">✓ Reviewed</span>
+            {% elsif pattern.review_status == "pending" %}
+              <span class="review-badge pending">⏳ Pending</span>
+            {% endif %}
+            <a href="{{ pattern.url | relative_url }}" class="card-link">Read →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center; padding:4rem 0; color:var(--muted);">
+      <p style="font-size:3rem; margin-bottom:1rem;">📐</p>
+      <h3>No patterns yet</h3>
+      <p>Be the first to submit a design pattern!</p>
+      <a href="https://github.com/{{ site.github_username | default: 'your-username' }}/{{ site.github_repo | default: 'DesignPatternsReviewSystem' }}/blob/main/CONTRIBUTING.md"
+         class="btn btn-primary" style="margin-top:1.5rem;" target="_blank" rel="noopener">Submit a Pattern</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('#patterns-grid .card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
